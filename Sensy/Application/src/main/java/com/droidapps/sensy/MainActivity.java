@@ -291,7 +291,7 @@ public class MainActivity extends Activity implements
     public void connectViaWifi(View view) {
         final String serverIpAddr=serverIp.getText().toString().trim();
         System.out.println("IPADDR: "+serverIpAddr);
-        if(socket!=null && !socket.isConnected()) {
+        if(socket==null || !socket.isConnected()) {
             getActionBar().setSubtitle("Connecting..");
 
             AsyncTask at = new AsyncTask() {
