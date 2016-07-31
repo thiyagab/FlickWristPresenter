@@ -280,28 +280,39 @@ public class MainActivity extends Activity implements
         if(item.getItemId()==R.id.menu_start_activity)
             onStartWearableActivityClick();
         if(item.getItemId()==R.id.menu_start_connect)
-            connectViaWifi();
+            connectViaWifi(null);
 
         return super.onOptionsItemSelected(item);
     }
 
 
 
-    private void connectViaWifi() {
+    public void connectViaWifi(View view) {
         final String serverIpAddr=serverIp.getText().toString().trim();
         System.out.println("IPADDR: "+serverIpAddr);
+        getActionBar().setSubtitle("Connecting..");
         AsyncTask at= new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
                 try {
                     socket = new Socket();
-                    socket.connect(new InetSocketAddress(serverIpAddr,4321));
+                    socket.connect(new InetSocketAddress(serverIpAddr,4321),5000);
                     socket.getOutputStream().write("Sample...\n".getBytes());
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return e.getMessage();
                 }
                 return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                if(o==null){
+                    getActionBar().setSubtitle("Connected");
+                }else{
+                    getActionBar().setSubtitle(o.toString());
+                }
             }
         };
         at.execute("");
@@ -323,6 +334,7 @@ public class MainActivity extends Activity implements
         if(socket!=null && socket.isConnected()){
             try {
                 System.out.println("Command: "+cmd);
+                getActionBar().setSubtitle("CMD: "+cmd);
                 socket.getOutputStream().write((cmd+"\n").getBytes());
             } catch (IOException e) {
                 e.printStackTrace();

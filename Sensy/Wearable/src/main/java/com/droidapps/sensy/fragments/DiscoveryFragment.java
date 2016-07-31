@@ -24,7 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.sensy.wearable.datalayer.R;
+import com.droidapps.sensy.R;
+
 
 /**
  * A simple fragment with two buttons to show connected phones and watches
@@ -39,11 +40,6 @@ public class DiscoveryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.discovery_fragment, container, false);
-//        textView= (TextView) v.findViewById(R.id.directionTxt);
         return v;
-    }
-
-    public void updateDirection(String text){
-//        textView.setText(text);
     }
 }

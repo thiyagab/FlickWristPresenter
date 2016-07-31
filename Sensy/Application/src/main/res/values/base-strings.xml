@@ -21,8 +21,9 @@
         <![CDATA[
         
             
-            Sense movement from watch, receive it via Data layer,
-            Connect to pi through bluetooth and send direction commands
+            Sense movement from watch, receive it via Message layer,
+            Connect to pc/mac through wifi and send direction commands.
+            Also Single Tap on this text to send \'RIGHT\' and double tap for \'LEFT\'
         ]]>
     </string>
 </resources>

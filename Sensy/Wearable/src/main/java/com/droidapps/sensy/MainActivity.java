@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.droidapps.sensy.fragments.DiscoveryFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -54,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.droidapps.sensy.DataLayerListenerService.LOGD;
 
 /**
  * The main activity with a view pager, containing three pages:<p/>
@@ -80,17 +78,16 @@ public class MainActivity extends Activity implements
     private static final String TAG = "MainActivity";
     private GoogleApiClient mGoogleApiClient;
 
-    private static final float SHAKE_THRESHOLD = 2f;
-    private static final int SHAKE_WAIT_TIME_MS = 250;
-    private static final float ROTATION_THRESHOLD = 2.0f;
-    private static final int ROTATION_WAIT_TIME_MS = 1000;
+
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private int mSensorType=Sensor.TYPE_ACCELEROMETER;
-    private long mShakeTime = 0;
-    private long mRotationTime = 0;
-    private DiscoveryFragment discoveryFragment;
+
+
+    private static final String START_ACTIVITY_PATH = "/start-activity";
+    static final String DATA_ITEM_RECEIVED_PATH = "/data-item-received";
+
 
 
     @Override
@@ -98,7 +95,6 @@ public class MainActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setupViews();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
                 .addConnectionCallbacks(this)
@@ -138,6 +134,7 @@ public class MainActivity extends Activity implements
         Wearable.MessageApi.addListener(mGoogleApiClient, this);
         Wearable.CapabilityApi.addListener(
                 mGoogleApiClient, this, Uri.parse("wear://"), CapabilityApi.FILTER_REACHABLE);
+        discoverNodes();
 
 
     }
@@ -240,7 +237,7 @@ public class MainActivity extends Activity implements
                         nodesList.clear();
                         for (Node node : nodes) {
                             nodesList.add(node.getId());
-                            Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), DataLayerListenerService.DATA_ITEM_RECEIVED_PATH,
+                            Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), DATA_ITEM_RECEIVED_PATH,
                                     "wear connected".getBytes());
                         }
                         LOGD(TAG, "Connected Nodes: " + (nodesList.isEmpty()
@@ -273,9 +270,6 @@ public class MainActivity extends Activity implements
 
     }
 
-    private void setupViews() {
-        discoveryFragment = (DiscoveryFragment) getFragmentManager().findFragmentById(R.id.controls);
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -322,15 +316,8 @@ public class MainActivity extends Activity implements
 
             sendData("RIGHT");
         }
-
-
-
     }
 
-
-
-    int DETECTION_SEND_THRESHOLD=500;
-    long lastDetectionTime;
 
 
 
@@ -344,9 +331,14 @@ public class MainActivity extends Activity implements
     public void sendData(String data){
         for (String nodeId : nodesList) {
 
-            Wearable.MessageApi.sendMessage(mGoogleApiClient, nodeId, DataLayerListenerService.DATA_ITEM_RECEIVED_PATH,
+            Wearable.MessageApi.sendMessage(mGoogleApiClient, nodeId, DATA_ITEM_RECEIVED_PATH,
                     data.getBytes());
         }
     }
 
+    public static void LOGD(final String tag, String message) {
+//        if (Log.isLoggable(tag, Log.DEBUG)) {
+        Log.d(tag, message);
+//        }
+    }
 }
