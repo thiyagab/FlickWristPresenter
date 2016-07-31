@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -290,32 +291,37 @@ public class MainActivity extends Activity implements
     public void connectViaWifi(View view) {
         final String serverIpAddr=serverIp.getText().toString().trim();
         System.out.println("IPADDR: "+serverIpAddr);
-        getActionBar().setSubtitle("Connecting..");
-        AsyncTask at= new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                try {
-                    socket = new Socket();
-                    socket.connect(new InetSocketAddress(serverIpAddr,4321),5000);
-                    socket.getOutputStream().write("Sample...\n".getBytes());
+        if(socket!=null && !socket.isConnected()) {
+            getActionBar().setSubtitle("Connecting..");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return e.getMessage();
-                }
-                return null;
-            }
+            AsyncTask at = new AsyncTask() {
+                @Override
+                protected Object doInBackground(Object[] params) {
+                    try {
+                        socket = new Socket();
+                        socket.connect(new InetSocketAddress(serverIpAddr, 4321), 5000);
+                        socket.getOutputStream().write("Sample...\n".getBytes());
 
-            @Override
-            protected void onPostExecute(Object o) {
-                if(o==null){
-                    getActionBar().setSubtitle("Connected");
-                }else{
-                    getActionBar().setSubtitle(o.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return e.getMessage();
+                    }
+                    return null;
                 }
-            }
-        };
-        at.execute("");
+
+                @Override
+                protected void onPostExecute(Object o) {
+                    if (o == null) {
+                        getActionBar().setSubtitle("Connected");
+                    } else {
+                        getActionBar().setSubtitle(o.toString());
+                    }
+                }
+            };
+            at.execute("");
+        }else{
+            Toast.makeText(MainActivity.this, "Already connected", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
