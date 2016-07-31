@@ -179,9 +179,11 @@ public class MainActivity extends Activity implements
 
     private void start() {
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        Toast.makeText(MainActivity.this, "Sensor started", Toast.LENGTH_SHORT).show();
     }
 
     private void stop() {
+        Toast.makeText(MainActivity.this, "Sensor Stopped", Toast.LENGTH_SHORT).show();
         mSensorManager.unregisterListener(this);
     }
 

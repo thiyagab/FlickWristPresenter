@@ -30,7 +30,7 @@ import com.droidapps.sensy.R;
 /**
  * A simple fragment with two buttons to show connected phones and watches
  */
-public class DiscoveryFragment extends Fragment {
+public class ControlFragment extends Fragment {
 
     private TextView textView;
     boolean presentationControl=false;
@@ -39,7 +39,7 @@ public class DiscoveryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.discovery_fragment, container, false);
+        View v= inflater.inflate(R.layout.control_fragment, container, false);
         return v;
     }
 }

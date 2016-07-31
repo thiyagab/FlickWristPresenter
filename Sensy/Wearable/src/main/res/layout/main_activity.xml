@@ -20,7 +20,7 @@
                 android:background="@color/white">
 
     <fragment
-        android:name="com.droidapps.sensy.fragments.DiscoveryFragment"
+        android:name="com.droidapps.sensy.fragments.ControlFragment"
         android:id="@+id/controls"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

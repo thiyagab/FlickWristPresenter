@@ -15,10 +15,10 @@ The project has two parts (actually 3),
 
 USAGE:
 
-1. Download the Presenter.jar (or build yourself) and run it in the PC. </br>
+1. Download the Presenter.jar from outputs folder (or build yourself) and run it in the PC. </br>
 <quote>java -jar Presenter.jar</quote>
 
-2. Download Sensy.apk (or build yourself) and install it in mobile, and make sure the Wearable app is synced with your Android wear.
+2. Download Sensy.apk from outputs folder (or build yourself) and install it in mobile, and make sure the Wearable app is synced with your Android wear.
 3. Enter the IP Address of the PC and click on 'connect to ip'
 4. From the options menu, select 'Start Activity', this will start the app in the wear
 5. In the wear app, click on Start when you are ready to present, then just shake your hand or snap your finger (any gesture which  creates a 'shake' event). 

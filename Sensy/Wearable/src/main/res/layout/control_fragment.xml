@@ -46,26 +46,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/controls"
         android:orientation="horizontal"
+        android:weightSum="1"
         android:layout_below="@id/stopaction"
         >
         <Button
             android:id="@+id/left"
-            android:text="LEFT"
-            android:layout_width="wrap_content"
+            android:text="@string/left"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
 
-            android:onClick="onLeft" />
+            android:onClick="onLeft"
+            android:layout_weight="0.50" />
 
         <Button
             android:id="@+id/right"
-            android:text="RIGHT"
+            android:text="@string/right"
 
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
 
-            android:onClick="onRight" />
+            android:onClick="onRight"
+            android:layout_weight="0.50" />
 
 
     </LinearLayout>
